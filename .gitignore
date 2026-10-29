@@ -1,2 +1,4 @@
 /rag_learn
 *.pdf
+.env
+.venv/
