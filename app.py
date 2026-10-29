@@ -1,21 +1,25 @@
 import pymupdf
 import gradio as gr
+import pdf_read as pr
 
 def gradio_fct(file_path):
     if file_path is None:
         return "No file uploaded"
-    return f"Got: {file_path}"
+
+    read = pr.pdf_r(file_path)
+    if read == None:
+        return "404 not found"
+    return read
 
 with gr.Blocks() as demo:
     gr.Markdown(
     """
     <div style="text-align: center;">
-        <h1 style="font-size: 3rem;">Voice News Assistant</h1>
-        <h3>Record a request such as <em>"latest news about AI"</em>.</h3>
+        <h1 style="font-size: 3rem;">PDF Q&A Assistant</h1>
+        <h3>Upload your file and ask question like <em>"What is this file about?"</em>.</h3>
         <ol style="display: inline-block; text-align: left; font-size: 0.95rem; opacity: 0.75;">
-            <li>Press <b>Record</b> and speak your request.</li>
-            <li>Press <b>Stop</b> when you're done.</li>
-            <li>Press <b>Summarize</b> and wait for the response.</li>
+            <li>Press <b>Upload</b> and choose your .pdf file.</li>
+            <li>Use <b>Chat</b> to discuss with LLM on your file.</li>
         </ol>
     </div>
     """
@@ -25,10 +29,10 @@ with gr.Blocks() as demo:
         gr.Column(scale=2)                      # empty left margin
         with gr.Column(scale=3, min_width=400):
             btn = gr.UploadButton("Your pdf file", variant="primary")
-            summary_box = gr.Textbox(label="Summary", lines=5, elem_id="summary_box")
+            out = gr.Textbox(label="Result")
         gr.Column(scale=2)                      # empty right margin
 
-    btn.click(gradio_fct, inputs=[btn], outputs=[summary_box])
+    btn.upload(gradio_fct, inputs=[btn], outputs=[out])
 
 theme = gr.Theme.from_hub("harsh8001/skymist")
 
