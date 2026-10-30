@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
-sentences = ["This is an example sentence", "Each sentence is converted"]
+from chonkie import RecursiveChunker
+import file_index
 
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-embeddings = model.encode(sentences)
-print(embeddings.shape)
+# model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+# print(model.prompts)

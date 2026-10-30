@@ -1,6 +1,7 @@
 import pymupdf
 import gradio as gr
-import pdf_read as pr
+import file_index as pr
+import llm
 
 def gradio_fct(file_path):
     if file_path is None:
