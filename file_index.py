@@ -1,5 +1,8 @@
 import pymupdf
 from chonkie import RecursiveChunker
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 # Read and keep page number info
 def pdf_r(file_name):
@@ -30,6 +33,12 @@ def index_doc(dict_list):
             index_list.append(({"page": page, "text": chunk.text}))
     return index_list
 
+def embed_doc(chunks):
+    txt = [c["text"] for c in chunks]
+
+    text_embeddings = model.encode_document(txt, normalize_embeddings=True, convert_to_tensor=True)
+    question = ["How are you today?"]
+    qst_embeddings = model.encode_query(question, normalize_embeddings=True, convert_to_tensor=True)
 
 for i in index_doc(pdf_r("test2.pdf")):
     print(i)
