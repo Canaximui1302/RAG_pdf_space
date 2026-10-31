@@ -1,8 +1,10 @@
 import pymupdf
+import torch
 from chonkie import RecursiveChunker
 from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+chunker = RecursiveChunker(chunk_size=600)
 
 # Read and keep page number info
 def pdf_r(file_name):
@@ -17,10 +19,8 @@ def pdf_r(file_name):
     return pages
 
 
-chunker = RecursiveChunker(chunk_size=600)
-
 # Function for chunking the retrieved text
-# dict is a list of dictionary
+# index_doc -> list of {page, chunk text}
 def index_doc(dict_list):
     index_list = []
     for d in dict_list:
@@ -33,13 +33,26 @@ def index_doc(dict_list):
             index_list.append(({"page": page, "text": chunk.text}))
     return index_list
 
+
 def embed_doc(chunks):
+    # make a list of chunks := [c1, c2, ...]
     txt = [c["text"] for c in chunks]
 
     text_embeddings = model.encode_document(txt, normalize_embeddings=True, convert_to_tensor=True)
-    question = ["How are you today?"]
+
+    question = str(input())
     qst_embeddings = model.encode_query(question, normalize_embeddings=True, convert_to_tensor=True)
 
-for i in index_doc(pdf_r("test2.pdf")):
-    print(i)
+    sim_score = model.similarity(qst_embeddings, text_embeddings)
+
+    scores, indices = torch.topk(sim_score, k=4)
+
+    print(scores)
+    print(indices[0])
+    for sc,ind in zip(scores[0],indices[0]):
+        print(f"[Score: {sc}]", chunks[ind]["text"])
+    print("Next\n")
+
+
+embed_doc(index_doc(pdf_r("attention.pdf")))
 

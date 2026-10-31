@@ -44,11 +44,11 @@ theme = theme.set(
     block_title_text_weight=theme.block_label_text_weight,
 )
 
-css = """
-#summary_box {
-    padding-top: 8px !important;
-}
+# css = """
+# #summary_box {
+#     padding-top: 8px !important;
+# }
 
-"""
+# """
 
-demo.launch(theme=theme, css=css)
+demo.launch(theme=theme)
