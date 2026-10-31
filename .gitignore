@@ -3,3 +3,4 @@
 .env
 .venv/
 testst.py
+__pycache__/
