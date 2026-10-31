@@ -40,7 +40,7 @@ def embed_doc(chunks):
 
     text_embeddings = model.encode_document(txt, normalize_embeddings=True, convert_to_tensor=True)
 
-    question = str(input())
+    question = ["what is transformer"]
     qst_embeddings = model.encode_query(question, normalize_embeddings=True, convert_to_tensor=True)
 
     sim_score = model.similarity(qst_embeddings, text_embeddings)
@@ -54,5 +54,5 @@ def embed_doc(chunks):
     print("Next\n")
 
 
-embed_doc(index_doc(pdf_r("attention.pdf")))
+
 
