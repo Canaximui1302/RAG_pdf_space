@@ -1,13 +1,13 @@
 import pymupdf
 import gradio as gr
-import file_index as pr
+import file_index as fi
 import llm
 
 def gradio_fct(file_path):
     if file_path is None:
         return "No file uploaded"
 
-    read = pr.pdf_r(file_path)
+    read = fi.pdf_r(file_path)
     if read == None:
         return "404 not found"
     return read

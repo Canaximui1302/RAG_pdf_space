@@ -61,11 +61,18 @@ def retrieve_text(data, question, k = TOP_K):
         retrieved_data.append({"page": page, "text": txt, "score": float(sc)})
     return retrieved_data
 
-
-def format_context(retrieved): # small formatter for retrieved text ,thanks Claude!
+# small formatter for retrieved text ,thanks Claude!
+def format_context(retrieved): 
     return "\n\n".join(f"[Page {r['page']}] {r['text']}" for r in retrieved)
+# for occ-rag model
+def build_documents(retrieved):
+    return [{"title": f"Page {r['page']}", "text": r["text"]} for r in retrieved]
 
 
 
 # for t in retrieve_text(embed_doc(pdf_r("bert.pdf")), "What is the model architecture?", 8):
 #     print(f"[Page {t["page"]}] \n\n Content:\n{t["text"]}")
+
+
+
+
