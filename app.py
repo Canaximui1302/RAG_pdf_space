@@ -45,25 +45,12 @@ with gr.Blocks() as demo:
         with gr.Column(scale=3, min_width=400):
             btn = gr.UploadButton("Your pdf file", file_types=[".pdf"], variant="primary")
             status = gr.Textbox(label="Status", interactive=False)
+            gr.ChatInterface(chatting, additional_inputs=[doc_state])
         gr.Column(scale=2)                      # empty right margin
 
-    btn.upload(get_embed_content, inputs=[btn], outputs=[doc_state, status])
-    gr.ChatInterface(chatting, additional_inputs=[doc_state])
+        btn.upload(get_embed_content, inputs=[btn], outputs=[doc_state, status])
+        
 
-theme = gr.Theme.from_hub("harsh8001/skymist")
-
-theme = theme.set(
-    block_title_text_color=theme.block_label_text_color,
-    block_title_text_color_dark=theme.block_label_text_color_dark,
-    block_title_text_size=theme.block_label_text_size,
-    block_title_text_weight=theme.block_label_text_weight,
-)
-
-# css = """
-# #summary_box {
-#     padding-top: 8px !important;
-# }
-
-# """
+theme = gr.Theme.from_hub("bencw/soft-no-dark-theme")
 
 demo.launch(theme=theme)

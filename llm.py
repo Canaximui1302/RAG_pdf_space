@@ -8,7 +8,7 @@ MAX_TOKEN = 250
 # Define the rules for the model
 SYSTEM = (
     "Answer the question using only the provided context. "
-    "Reply in a natural, conversational way in 2 to 4 sentences, "
+    "Reply in a natural, conversational way in 2 to 10 sentences, "
     "and mention the page numbers you used. "
     "If the context does not contain the answer, reply only: "
     "\"I couldn't find that in the document.\" Do not describe or guess what the context contains."
