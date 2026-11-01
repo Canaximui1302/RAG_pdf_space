@@ -3,16 +3,30 @@ import gradio as gr
 import file_index as fi
 import llm
 
-def gradio_fct(file_path):
+def get_embed_content(file_path):
     if file_path is None:
         return "No file uploaded"
 
-    read = fi.pdf_r(file_path)
-    if read == None:
+    file_content = fi.pdf_r(file_path)
+    if file_content == None:
         return "404 not found"
-    return read
+    embedded_content = fi.embed_doc(file_content)
+    return embedded_content, f"Ready: {len(embedded_content['chunks'])} chunks from {len(file_content)} pages. Ask your question below."
+
+
+def chatting(question, history, doc):
+    if doc is None:
+        return "Please upload a PDF first."
+    retrieved_context = fi.retrieve_text(doc, question, 6)
+    retrieved_context = fi.format_context(retrieved_context)
+
+    _, answer = llm.send_request(retrieved_context, question)
+
+    return answer
+    
 
 with gr.Blocks() as demo:
+    doc_state = gr.State(None)
     gr.Markdown(
     """
     <div style="text-align: center;">
@@ -29,11 +43,12 @@ with gr.Blocks() as demo:
     with gr.Row():
         gr.Column(scale=2)                      # empty left margin
         with gr.Column(scale=3, min_width=400):
-            btn = gr.UploadButton("Your pdf file", variant="primary")
-            out = gr.Textbox(label="Result")
+            btn = gr.UploadButton("Your pdf file", file_types=[".pdf"], variant="primary")
+            status = gr.Textbox(label="Status", interactive=False)
         gr.Column(scale=2)                      # empty right margin
 
-    btn.upload(gradio_fct, inputs=[btn], outputs=[out])
+    btn.upload(get_embed_content, inputs=[btn], outputs=[doc_state, status])
+    gr.ChatInterface(chatting, additional_inputs=[doc_state])
 
 theme = gr.Theme.from_hub("harsh8001/skymist")
 

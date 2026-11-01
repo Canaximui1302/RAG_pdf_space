@@ -29,7 +29,7 @@ def pdf_r(file_name):
 
 
 # Function for chunking the scanned text
-# index_doc -> list of {page, chunk text}
+# index_doc -> {list of {page, chunk text}, embedded whole text}
 def embed_doc(dict_list):
     chunked_list = [] # contains {page, chunked text}
     for d in dict_list:

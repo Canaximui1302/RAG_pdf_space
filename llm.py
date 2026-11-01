@@ -50,20 +50,20 @@ def send_request(context, question, max_token = MAX_TOKEN):
 
 
 # Time  counter initialization
-torch.cuda.synchronize()
-t0 = time.perf_counter()
-# new_tokens, answer = run(20000)
+# torch.cuda.synchronize()
+# t0 = time.perf_counter()
+# # new_tokens, answer = run(20000)
 
-question = "How many parameters do GPT-2 have"
-retrieved = fi.retrieve_text(fi.embed_doc(fi.pdf_r("bert.pdf")), question)
-context = fi.format_context(retrieved)
+# question = "How many parameters do GPT-2 have"
+# retrieved = fi.retrieve_text(fi.embed_doc(fi.pdf_r("bert.pdf")), question)
+# context = fi.format_context(retrieved)
 
 
-new_tokens, answer = send_request(context, question)
-print(answer)
-print("generated tokens:", len(new_tokens))
+# new_tokens, answer = send_request(context, question)
+# print(answer)
+# print("generated tokens:", len(new_tokens))
 
-# Time  counter end
-torch.cuda.synchronize()
-dt = time.perf_counter() - t0
-print("Executed in : ", dt, "s")
+# # Time  counter end
+# torch.cuda.synchronize()
+# dt = time.perf_counter() - t0
+# print("Executed in : ", dt, "s")
