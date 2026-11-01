@@ -95,17 +95,6 @@ Open the local URL printed in the terminal (by default `http://127.0.0.1:7860`).
 1. Click the upload button and choose a `.pdf` file. The status box shows how many chunks were indexed.
 2. Type a question in the chat box.
 
-## Configuration
-
-| Setting | Where | Notes |
-|---|---|---|
-| Language model | `MODEL` in `llm.py` | Tested with `Qwen/Qwen3-1.7B` locally. Any chat model that works with `transformers` can be used if you adapt the prompt format. |
-| Max answer length | `MAX_TOKEN` in `llm.py` | Keep it modest (a few hundred tokens) so answers stay fast. |
-| Precision | `dtype` in `llm.py` | Use `torch.float16` on GPUs without native bfloat16 support (for example RTX 20 series), and `torch.bfloat16` on newer GPUs. |
-| Chunk size | `RecursiveChunker(...)` in `file_index.py` | Around 600 to 800 characters works well. Check the chunker's unit (characters vs tokens) for your installed Chonkie version. |
-| Embedding model | `file_index.py` | Must be the same for indexing and querying. Rebuild the index if you change it. |
-| Number of retrieved chunks | `k` passed to `retrieve_text` in `app.py` | 4 to 6 is a good range. More chunks mean longer prompts and slower answers. |
-
 ## Testing locally
 
 **1. Smoke test.** Start the app, upload any text-based PDF, and ask "What is this document about?"
