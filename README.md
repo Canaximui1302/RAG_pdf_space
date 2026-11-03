@@ -135,16 +135,6 @@ Read the printed chunks. They should start and end at sentence or paragraph boun
 For each question, note whether the correct chunk was retrieved (step 2) and whether the answer was correct. A wrong answer with the right chunk points to the model or the prompt. A wrong answer without it points to chunking or embedding.
 
 ## Credits
+PyMuPDF, Chonkie, Sentence-Transformers, all-MiniLM-L6-v2, Qwen3, Gradio, Hugging Face. The BERT paper (Devlin et al., arXiv:1810.04805), used as the test document, and the original RAG paper (Lewis et al., 2020) for the overall approach.
 
 Built by Nguyen Ho Minh Khanh.
-
-This project stands on the work of others:
-
-* PyMuPDF (Artifex) for PDF text extraction.
-* Chonkie for text chunking.
-* Sentence-Transformers and the all-MiniLM-L6-v2 embedding model.
-* Qwen3 by the Qwen team at Alibaba Cloud, used as the language model.
-* Transformers and PyTorch for model loading and inference.
-* Gradio for the user interface.
-* Hugging Face for the Hub, Spaces, and ZeroGPU.
-* The BERT paper (Devlin et al., arXiv:1810.04805), used as the test document, and the original RAG paper (Lewis et al., 2020) for the overall approach.
